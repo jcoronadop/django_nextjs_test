@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./.postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: PruebaUNP_JeffersonCoronado
+      POSTGRES_USER: adminpostgres
+      POSTGRES_PASSWORD: 9F87ZP5MF6VY7iVY^Q!g
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+
+  django:
+    build: ./
+    command: ./entrypoint.sh
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/src/
+    ports:
+      - "8000:8000"
